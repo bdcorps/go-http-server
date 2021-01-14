@@ -1,7 +1,7 @@
 package main
 
-var students = make(map[string][]float64)
-var exams = make(map[string][]float64)
+var students = make(map[string][]ServerEvent)
+var exams = make(map[string][]ServerEvent)
 
 // Returns all the seen students
 func getStudents() []string {
@@ -9,13 +9,13 @@ func getStudents() []string {
 }
 
 // Returns all the scores by a particular student
-func getAllScoresByStudentID(id string) []float64 {
+func getAllByStudentID(id string) []ServerEvent {
 	return students[id]
 }
 
 // Add a new student's scores
-func addStudents(studentId string, score float64) {
-	students[studentId] = append(students[studentId], score)
+func addStudents(serverEvent ServerEvent) {
+	students[serverEvent.StudentId] = append(students[serverEvent.StudentId], serverEvent)
 }
 
 // Returns all the seen exams
@@ -24,11 +24,11 @@ func getExams() []string {
 }
 
 // Returns all scores for a given exam
-func getAllScoresByExamNumber(number string) []float64 {
+func getAllByExamNumber(number string) []ServerEvent {
 	return exams[number]
 }
 
 // Add a new exam's scores
-func addExams(examNo string, score float64) {
-	exams[examNo] = append(exams[examNo], score)
+func addExams(serverEvent ServerEvent) {
+	exams[serverEvent.Exam] = append(exams[serverEvent.Exam], serverEvent)
 }

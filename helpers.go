@@ -7,7 +7,7 @@ import (
 )
 
 // Returns keys only for given map
-func getKeys(dataMap map[string][]float64) []string {
+func getKeys(dataMap map[string][]ServerEvent) []string {
 	keys := make([]string, len(dataMap))
 
 	i := 0
@@ -16,6 +16,16 @@ func getKeys(dataMap map[string][]float64) []string {
 		i++
 	}
 	return keys
+}
+
+func getScores(events []ServerEvent) []float64 {
+	scores := []float64{}
+	i := 0
+	for _, e := range events {
+		scores = append(scores, e.Score)
+		i++
+	}
+	return scores
 }
 
 // Rounds to  decimal places
@@ -41,7 +51,7 @@ func sum(arr []float64) float64 {
 	return result
 }
 
-// Custom marshaller for events coming from server-side - making exam a string
+// UnmarshalJSON  Custom marshaller for events coming from server-side - making exam a string
 func (s *ServerEvent) UnmarshalJSON(b []byte) error {
 	var objMap map[string]*json.RawMessage
 	err := json.Unmarshal(b, &objMap)
@@ -49,8 +59,8 @@ func (s *ServerEvent) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	var StudentId string
-	err = json.Unmarshal(*objMap["studentId"], &StudentId)
+	var StudentID string
+	err = json.Unmarshal(*objMap["studentId"], &StudentID)
 	if err != nil {
 		return err
 	}
@@ -79,7 +89,7 @@ func (s *ServerEvent) UnmarshalJSON(b []byte) error {
 		s.Exam = ExamString
 	}
 
-	s.StudentId = StudentId
+	s.StudentId = StudentID
 	s.Score = Score
 
 	return nil

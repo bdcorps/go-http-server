@@ -1,7 +1,13 @@
 package main
 
-// Common response for the app endpoints
-type MainResponse struct {
-	Scores  []float64
+// StudentsResponse Common response for the app endpoints
+type StudentsResponse struct {
+	Scores  []ServerEvent
+	Average float64
+}
+
+// ExamsResponse Common response for the app endpoints
+type ExamsResponse struct {
+	Scores  []ServerEvent
 	Average float64
 }

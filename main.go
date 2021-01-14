@@ -16,7 +16,7 @@ func main() {
 		router := httprouter.New()
 
 		router.GET("/students", studentsController)
-		router.GET("/students/:id", studentsIdController)
+		router.GET("/students/:id", studentsIDController)
 		router.GET("/exams", examsController)
 		router.GET("/exams/:number", examsNumberController)
 
@@ -46,10 +46,7 @@ func main() {
 			fmt.Printf("Error %+v", err)
 		}
 
-		ServerEvent.Exam = string(ServerEvent.Exam)
-
-		addStudents(ServerEvent.StudentId, ServerEvent.Score)
-
-		addExams(ServerEvent.Exam, ServerEvent.Score)
+		addStudents(ServerEvent)
+		addExams(ServerEvent)
 	}
 }

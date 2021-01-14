@@ -18,13 +18,13 @@ func studentsController(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 }
 
 // Controller for the /student/:id endpoint
-func studentsIdController(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func studentsIDController(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	id := ps.ByName("id")
-	allScores := getAllScoresByStudentID(id)
+	allScores := getAllByStudentID(id)
 
-	scores := MainResponse{
+	scores := StudentsResponse{
 		Scores:  allScores,
-		Average: average(allScores)}
+		Average: average(getScores(allScores))}
 
 	var jsonData []byte
 	jsonData, err := json.Marshal(scores)
@@ -47,11 +47,11 @@ func examsController(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 // Controller for the /exams/:number endpoint
 func examsNumberController(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	number := string(ps.ByName("number"))
-	allScores := getAllScoresByExamNumber(number)
+	allScores := getAllByExamNumber(number)
 
-	scores := MainResponse{
+	scores := ExamsResponse{
 		Scores:  allScores,
-		Average: average(allScores)}
+		Average: average(getScores(allScores))}
 
 	var jsonData []byte
 	jsonData, err := json.Marshal(scores)
